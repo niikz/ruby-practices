@@ -23,14 +23,13 @@ end
 # カレンダーの装飾を追加
 puts "#{month}月 #{year}".center(20)
 puts "日 月 火 水 木 金 土"
-# 今月のカレンダーを表示
+# カレンダーを表示
 first_date = Date.new(year, month, 1)
 last_date = Date.new(year, month, -1)
-(first_date.mday..last_date.mday).each do |i|
-  date = Date.new(year, month, i)
+(first_date..last_date).each do |date|
   day = date.strftime('%e')
   white_space = "   "
-  day = (white_space * first_date.cwday) + day if i == 1
+  day = (white_space * first_date.cwday) + day if date.mday == 1
   if date.cwday % 6 == 0
     print(day, "\n")
   else

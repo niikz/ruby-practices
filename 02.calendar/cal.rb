@@ -6,23 +6,19 @@ require 'date'
 # コマンド入力から年月を指定
 params = ARGV.getopts("y:", "m:")
 today = Date.today
-year = params["y"]
-month = params["m"]
-if year == nil
+year = params["y"].to_i
+month = params["m"].to_i
+if params["y"].nil?
   year = today.year
-elsif year.to_i < 1 || year.to_i > 9999
+elsif params["y"].to_i < 1 || params["y"].to_i > 9999
   puts "cal: year `#{year}' not in range 1..9999"
   return
-else
-  year = year.to_i
 end
-if month == nil
+if params["m"].nil?
   month = today.month
-elsif month.to_i < 1 || month.to_i > 12
+elsif params["m"].to_i < 1 || params["m"].to_i > 12
   puts "calcal: #{month} is neither a month number (1..12) nor a name"
   return
-else
-  month = month.to_i
 end
 # カレンダーの装飾を追加
 str = "#{month}月 #{year}"

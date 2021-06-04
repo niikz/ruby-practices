@@ -30,7 +30,7 @@ last_date = Date.new(year, month, -1)
   day = date.strftime('%e')
   white_space = "   "
   day = (white_space * first_date.cwday) + day if date.mday == 1
-  if date.cwday % 6 == 0
+  if date.saturday?
     print(day, "\n")
   else
     print(day, " ")

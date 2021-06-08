@@ -5,18 +5,13 @@ require 'date'
 
 # コマンド入力から年月を指定
 params = ARGV.getopts("y:", "m:")
-today = Date.today
-year = params["y"].to_i
-month = params["m"].to_i
-if params["y"].nil?
-  year = today.year
-elsif params["y"].to_i < 1 || params["y"].to_i > 9999
+year = (params["y"] || Date.today.year).to_i
+month = (params["m"] || Date.today.month).to_i
+if year < 1 || year > 9999
   puts "cal: year `#{year}' not in range 1..9999"
   return
 end
-if params["m"].nil?
-  month = today.month
-elsif params["m"].to_i < 1 || params["m"].to_i > 12
+if month < 1 || month > 12
   puts "calcal: #{month} is neither a month number (1..12) nor a name"
   return
 end

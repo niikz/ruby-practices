@@ -58,18 +58,16 @@ def long_format(dir_file)
   dir_file.each do |file_name|
     file_stat = File::Stat.new(file_name)
 
-    file_type = convert_to_ftype(file_stat.ftype)
-
-    file_mode = file_stat.mode.to_s(8).slice(-3, 3).to_s.split('')
-    mode_array = file_mode.map {|f| convert_to_mode(f)}
-    permission = mode_array.join
-
-    hard_link = file_stat.nlink.to_s.rjust(2, ' ')
-    owner_name = Etc.getpwuid(file_stat.uid).name
-    group_name = Etc.getgrgid(file_stat.gid).name
-    byte_size = file_stat.size.to_s.rjust(5, ' ')
-    time_stamp = file_stat.mtime.strftime("%_m %_d %R")
-    print(file_type, permission, ' ', hard_link, ' ', owner_name, '  ', group_name, ' ', byte_size, ' ', time_stamp, ' ', file_name, "\n")
+    data = []
+    data << convert_to_ftype(file_stat.ftype) + file_stat.mode.to_s(8).slice(-3, 3).to_s.split('').map { |f| convert_to_mode(f) }.join
+    data << file_stat.nlink.to_s.rjust(2, ' ')
+    data << Etc.getpwuid(file_stat.uid).name
+    data << Etc.getgrgid(file_stat.gid).name
+    data << file_stat.size.to_s.rjust(5, ' ')
+    data << file_stat.mtime.strftime("%_m %_d %R")
+    data << file_name
+    print data.join(' ')
+    print("\n")
   end
 end
 

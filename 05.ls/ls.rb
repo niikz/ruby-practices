@@ -29,13 +29,23 @@ def print_transposed_array(transposed_array, max_characters)
   end
 end
 
+def convert_to_ftype(ftype)
+  {
+    file: '-',
+    directory: 'd',
+    characterSpecial: 'c',
+    blockSpecial: 'b',
+    fifo: 'p',
+    link: 'l',
+    socket: 's'
+  }[ftype.to_sym]
+end
+
 def long_format(dir_file)
   dir_file.each do |file_name|
     file_stat = File::Stat.new(file_name)
 
-    hash_ftype = {"file" => "-", "directory" => "d", "characterSpecial" => "c", "blockSpecial" => "b", "fifo" => "p", "link" => "l", "socket" => "s"}
-    ftype = file_stat.ftype
-    file_type = hash_ftype[ftype]
+    file_type = convert_to_ftype(file_stat.ftype)
 
     file_mode = file_stat.mode.to_s(8).slice(-3, 3).to_s.split('')
     mode_array = []

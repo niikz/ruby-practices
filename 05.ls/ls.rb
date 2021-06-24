@@ -56,7 +56,7 @@ end
 
 def file_status(file)
   file_stat = File::Stat.new(file)
-  stat_mode = file_stat.mode.to_s(8).slice(-3, 3).to_s.split('').map { |f| convert_to_mode(f) }
+  stat_mode = file_stat.mode.to_s(8)[-3, 3].split('').map { |f| convert_to_mode(f) }
   data = []
   data << convert_to_ftype(file_stat.ftype) + stat_mode.join
   data << file_stat.nlink.to_s.rjust(2, ' ')

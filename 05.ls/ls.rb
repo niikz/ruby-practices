@@ -41,6 +41,19 @@ def convert_to_ftype(ftype)
   }[ftype.to_sym]
 end
 
+def convert_to_mode(mode)
+  {
+    '7': 'rwx',
+    '6': 'rw-',
+    '5': 'r-x',
+    '4': 'r--',
+    '3': '-wx',
+    '2': '-w-',
+    '1': '--x',
+    '0': '---'
+  }[mode.to_sym]
+end
+
 def long_format(dir_file)
   dir_file.each do |file_name|
     file_stat = File::Stat.new(file_name)
@@ -48,11 +61,7 @@ def long_format(dir_file)
     file_type = convert_to_ftype(file_stat.ftype)
 
     file_mode = file_stat.mode.to_s(8).slice(-3, 3).to_s.split('')
-    mode_array = []
-    file_mode.each do |f|
-      hash_mode = {"7" => "rwx", "6" => "rw-", "5" => "r-x", "4" => "r--", "3" => "-wx", "2" => "-w-", "1" => "--x", "0" => "---"}
-      mode_array << hash_mode[f]
-    end
+    mode_array = file_mode.map {|f| convert_to_mode(f)}
     permission = mode_array.join
 
     hard_link = file_stat.nlink.to_s.rjust(2, ' ')

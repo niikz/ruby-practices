@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'optparse'
+
+options = ARGV.getopts('alr')
+
 dir_file = Dir.glob('*').sort
 
 COLUMN_SIZE = 3
@@ -23,4 +27,8 @@ def print_transposed_array(transposed_array, max_characters)
   end
 end
 
-multiple_columns(dir_file)
+if options['l']
+  long_format(dir_file)
+else
+  multiple_columns(dir_file)
+end

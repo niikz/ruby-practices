@@ -68,6 +68,12 @@ def file_status(file)
 end
 
 def long_format(dir_file)
+  total_block = 0
+  dir_file.each do |file|
+    total_block += File::Stat.new(file).blocks
+  end
+  puts "total #{total_block}"
+
   dir_file.each do |file|
     puts file_status(file).join(' ')
   end

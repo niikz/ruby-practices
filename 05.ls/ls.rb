@@ -5,7 +5,7 @@ require 'optparse'
 
 options = ARGV.getopts('alr')
 
-dir_file = Dir.glob('*').sort
+dir_file = options['a'] ? Dir.glob('*', File::FNM_DOTMATCH).sort : Dir.glob('*').sort
 
 COLUMN_SIZE = 3
 def multiple_columns(dir_file)

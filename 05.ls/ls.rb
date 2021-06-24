@@ -54,20 +54,22 @@ def convert_to_mode(mode)
   }[mode.to_sym]
 end
 
-def long_format(dir_file)
-  dir_file.each do |file_name|
-    file_stat = File::Stat.new(file_name)
+def file_status(file)
+  file_stat = File::Stat.new(file)
+  stat_mode = file_stat.mode.to_s(8).slice(-3, 3).to_s.split('').map { |f| convert_to_mode(f) }
+  data = []
+  data << convert_to_ftype(file_stat.ftype) + stat_mode.join
+  data << file_stat.nlink.to_s.rjust(2, ' ')
+  data << Etc.getpwuid(file_stat.uid).name
+  data << Etc.getgrgid(file_stat.gid).name.rjust(6, ' ')
+  data << file_stat.size.to_s.rjust(5, ' ')
+  data << file_stat.mtime.strftime('%_m %_d %R')
+  data << file
+end
 
-    data = []
-    data << convert_to_ftype(file_stat.ftype) + file_stat.mode.to_s(8).slice(-3, 3).to_s.split('').map { |f| convert_to_mode(f) }.join
-    data << file_stat.nlink.to_s.rjust(2, ' ')
-    data << Etc.getpwuid(file_stat.uid).name
-    data << Etc.getgrgid(file_stat.gid).name
-    data << file_stat.size.to_s.rjust(5, ' ')
-    data << file_stat.mtime.strftime("%_m %_d %R")
-    data << file_name
-    print data.join(' ')
-    print("\n")
+def long_format(dir_file)
+  dir_file.each do |file|
+    puts file_status(file).join(' ')
   end
 end
 

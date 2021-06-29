@@ -8,11 +8,7 @@ option = ARGV.getopts('l')
 def count_file_data(option)
   ARGV.each do |file_name|
     text = File.read(file_name)
-    print text.lines.count.to_s.rjust(8)
-    unless option['l']
-      print text.split(/\s+|　+/).count.to_s.rjust(8)
-      print text.size.to_s.rjust(8)
-    end
+    print_text_count(option, text)
     puts " #{file_name}"
   end
   return unless ARGV.size > 1
@@ -40,12 +36,15 @@ end
 
 def input_from_stdin(option)
   text = $stdin.read
+  puts print_text_count(option, text)
+end
+
+def print_text_count(option, text)
   print text.lines.count.to_s.rjust(8)
-  unless option['l']
-    print text.split(/\s+|　+/).count.to_s.rjust(8)
-    print text.size.to_s.rjust(8)
-  end
-  print("\n")
+  return if option['l']
+
+  print text.split(/\s+|　+/).count.to_s.rjust(8)
+  print text.size.to_s.rjust(8)
 end
 
 if ARGV[0]

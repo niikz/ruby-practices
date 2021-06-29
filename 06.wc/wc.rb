@@ -3,7 +3,14 @@
 
 require 'optparse'
 
-option = ARGV.getopts('l')
+def main
+  option = ARGV.getopts('l')
+  if ARGV[0]
+    count_file_data(option)
+  else
+    input_from_stdin(option)
+  end
+end
 
 def count_file_data(option)
   ARGV.each do |file_name|
@@ -47,8 +54,4 @@ def print_text_count(option, text)
   print text.size.to_s.rjust(8)
 end
 
-if ARGV[0]
-  count_file_data(option)
-else
-  input_from_stdin(option)
-end
+main

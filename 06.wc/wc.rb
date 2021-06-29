@@ -38,6 +38,18 @@ def total_file_data(option)
   puts ' total'
 end
 
+def input_from_stdin(option)
+  text = $stdin.read
+  print text.lines.count.to_s.rjust(8)
+  unless option['l']
+    print text.split(/\s+|　+/).count.to_s.rjust(8)
+    print text.size.to_s.rjust(8)
+  end
+  print("\n")
+end
+
 if ARGV[0]
   count_file_data(option)
+else
+  input_from_stdin(option)
 end

@@ -19,7 +19,10 @@ COLUMN_SIZE = 3
 def display_format(files)
   max_lines = (files.size.to_f / COLUMN_SIZE).ceil
   sliced_array = files.each_slice(max_lines).to_a
-  (max_lines - sliced_array.last.size).times { sliced_array.last.push('') } if sliced_array.last.size < max_lines
+  if sliced_array.last.size < max_lines
+    number_of_blanks = max_lines - sliced_array.last.size
+    number_of_blanks.times { sliced_array.last.push('') }
+  end
   transposed_array = sliced_array.transpose
   max_characters = files.map(&:size).max
   show_array(transposed_array, max_characters)

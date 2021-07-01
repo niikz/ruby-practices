@@ -60,29 +60,26 @@ def convert_to_mode(mode)
   }[mode.to_sym]
 end
 
-def file_status(file)
-  file_stat = File::Stat.new(file)
-  stat_mode = file_stat.mode.to_s(8)[-3, 3].split('').map { |f| convert_to_mode(f) }
-  data = []
-  data << convert_to_ftype(file_stat.ftype) + stat_mode.join
-  data << file_stat.nlink.to_s.rjust(2)
-  data << Etc.getpwuid(file_stat.uid).name
-  data << Etc.getgrgid(file_stat.gid).name.rjust(6)
-  data << file_stat.size.to_s.rjust(5)
-  data << file_stat.mtime.strftime('%_m %_d %R')
-  data << file
-end
-
 def long_format(files)
   total_block = 0
+  data_array = []
   files.each do |file|
-    total_block += File::Stat.new(file).blocks
+    file_stat = File.stat(file)
+    total_block += file_stat.blocks
+    stat_mode = file_stat.mode.to_s(8)[-3, 3].split('').map { |f| convert_to_mode(f) }
+    data = [
+      convert_to_ftype(file_stat.ftype) + stat_mode.join,
+      file_stat.nlink.to_s.rjust(2),
+      Etc.getpwuid(file_stat.uid).name,
+      Etc.getgrgid(file_stat.gid).name.rjust(6),
+      file_stat.size.to_s.rjust(5),
+      file_stat.mtime.strftime('%_m %_d %R'),
+      file
+    ].join(' ')
+    data_array << data
   end
   puts "total #{total_block}"
-
-  files.each do |file|
-    puts file_status(file).join(' ')
-  end
+  puts data_array
 end
 
 main

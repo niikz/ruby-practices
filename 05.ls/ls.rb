@@ -11,12 +11,12 @@ def main
   if options['l']
     long_format(files)
   else
-    multiple_columns(files)
+    display_format(files)
   end
 end
 
 COLUMN_SIZE = 3
-def multiple_columns(files)
+def display_format(files)
   max_lines = (files.size.to_f / COLUMN_SIZE).ceil
   sliced_array = files.each_slice(max_lines).map { |d| d }
   (max_lines - sliced_array.last.size).times { sliced_array.last.push('') } if sliced_array.last.size < max_lines

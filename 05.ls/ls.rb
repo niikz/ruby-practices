@@ -6,22 +6,22 @@ require 'etc'
 
 def main
   options = ARGV.getopts('alr')
-  dir_file = options['a'] ? Dir.glob('*', File::FNM_DOTMATCH).sort : Dir.glob('*').sort
-  dir_file = dir_file.reverse if options['r']
+  files = options['a'] ? Dir.glob('*', File::FNM_DOTMATCH).sort : Dir.glob('*').sort
+  files = files.reverse if options['r']
   if options['l']
-    long_format(dir_file)
+    long_format(files)
   else
-    multiple_columns(dir_file)
+    multiple_columns(files)
   end
 end
 
 COLUMN_SIZE = 3
-def multiple_columns(dir_file)
-  max_lines = (dir_file.size.to_f / COLUMN_SIZE).ceil
-  sliced_array = dir_file.each_slice(max_lines).map { |d| d }
+def multiple_columns(files)
+  max_lines = (files.size.to_f / COLUMN_SIZE).ceil
+  sliced_array = files.each_slice(max_lines).map { |d| d }
   (max_lines - sliced_array.last.size).times { sliced_array.last.push('') } if sliced_array.last.size < max_lines
   transposed_array = sliced_array.transpose
-  max_characters = dir_file.map(&:size).max
+  max_characters = files.map(&:size).max
   print_transposed_array(transposed_array, max_characters)
 end
 
@@ -73,14 +73,14 @@ def file_status(file)
   data << file
 end
 
-def long_format(dir_file)
+def long_format(files)
   total_block = 0
-  dir_file.each do |file|
+  files.each do |file|
     total_block += File::Stat.new(file).blocks
   end
   puts "total #{total_block}"
 
-  dir_file.each do |file|
+  files.each do |file|
     puts file_status(file).join(' ')
   end
 end

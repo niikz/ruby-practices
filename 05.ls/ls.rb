@@ -4,10 +4,16 @@
 require 'optparse'
 require 'etc'
 
-options = ARGV.getopts('alr')
-
-dir_file = options['a'] ? Dir.glob('*', File::FNM_DOTMATCH).sort : Dir.glob('*').sort
-dir_file = dir_file.reverse if options['r']
+def main
+  options = ARGV.getopts('alr')
+  dir_file = options['a'] ? Dir.glob('*', File::FNM_DOTMATCH).sort : Dir.glob('*').sort
+  dir_file = dir_file.reverse if options['r']
+  if options['l']
+    long_format(dir_file)
+  else
+    multiple_columns(dir_file)
+  end
+end
 
 COLUMN_SIZE = 3
 def multiple_columns(dir_file)
@@ -79,8 +85,4 @@ def long_format(dir_file)
   end
 end
 
-if options['l']
-  long_format(dir_file)
-else
-  multiple_columns(dir_file)
-end
+main

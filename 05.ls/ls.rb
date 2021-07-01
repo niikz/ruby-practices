@@ -22,10 +22,10 @@ def display_format(files)
   (max_lines - sliced_array.last.size).times { sliced_array.last.push('') } if sliced_array.last.size < max_lines
   transposed_array = sliced_array.transpose
   max_characters = files.map(&:size).max
-  print_transposed_array(transposed_array, max_characters)
+  show_array(transposed_array, max_characters)
 end
 
-def print_transposed_array(transposed_array, max_characters)
+def show_array(transposed_array, max_characters)
   transposed_array.each do |array|
     array.each do |a|
       print a.ljust(max_characters)

@@ -28,7 +28,7 @@ end
 def print_transposed_array(transposed_array, max_characters)
   transposed_array.each do |array|
     array.each do |a|
-      print a.ljust(max_characters, ' ')
+      print a.ljust(max_characters)
       print("\t")
     end
     print("\n")
@@ -65,10 +65,10 @@ def file_status(file)
   stat_mode = file_stat.mode.to_s(8)[-3, 3].split('').map { |f| convert_to_mode(f) }
   data = []
   data << convert_to_ftype(file_stat.ftype) + stat_mode.join
-  data << file_stat.nlink.to_s.rjust(2, ' ')
+  data << file_stat.nlink.to_s.rjust(2)
   data << Etc.getpwuid(file_stat.uid).name
-  data << Etc.getgrgid(file_stat.gid).name.rjust(6, ' ')
-  data << file_stat.size.to_s.rjust(5, ' ')
+  data << Etc.getgrgid(file_stat.gid).name.rjust(6)
+  data << file_stat.size.to_s.rjust(5)
   data << file_stat.mtime.strftime('%_m %_d %R')
   data << file
 end

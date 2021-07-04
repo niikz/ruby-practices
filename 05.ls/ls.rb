@@ -25,10 +25,10 @@ def display_format(files)
   end
   swap_rows_columns = sliced_array.transpose
   max_characters = files.map(&:size).max
-  output_display_format(swap_rows_columns, max_characters)
+  output_formatted_rows(swap_rows_columns, max_characters)
 end
 
-def output_display_format(swap_rows_columns, max_characters)
+def output_formatted_rows(swap_rows_columns, max_characters)
   swap_rows_columns.each do |array|
     array.each do |a|
       print a.ljust(max_characters)

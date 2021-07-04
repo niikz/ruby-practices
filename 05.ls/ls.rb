@@ -23,13 +23,13 @@ def display_format(files)
     number_of_blanks = max_lines - sliced_array.last.size
     number_of_blanks.times { sliced_array.last.push('') }
   end
-  swap_rows_columns = sliced_array.transpose
+  unformatted_rows = sliced_array.transpose
   max_characters = files.map(&:size).max
-  output_formatted_rows(swap_rows_columns, max_characters)
+  output_formatted_rows(unformatted_rows, max_characters)
 end
 
-def output_formatted_rows(swap_rows_columns, max_characters)
-  swap_rows_columns.each do |array|
+def output_formatted_rows(unformatted_rows, max_characters)
+  unformatted_rows.each do |array|
     array.each do |a|
       print a.ljust(max_characters)
       print("\t")

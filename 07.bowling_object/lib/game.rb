@@ -9,6 +9,13 @@ class Game
   end
 
   def convert_to_shots
-    mark.split(',')
+    @shots = mark.split(',')
+  end
+
+  def divide_into_frames
+    @frames = @shots.first(9).map do
+      @shots.first == 'X' ? @shots.shift(1) : @shots.shift(2)
+    end
+    @frames << @shots
   end
 end

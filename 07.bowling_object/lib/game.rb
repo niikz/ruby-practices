@@ -12,6 +12,3 @@ class Game
     mark.split(',')
   end
 end
-
-game_1 = Game.new('1,8,2,7,3,6,4,5,0,9,1,8,2,7,3,6,4,5,0,9')
-p game_1.convert_to_shots

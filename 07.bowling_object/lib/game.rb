@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require_relative 'frame'
+
 class Game
   attr_reader :mark
 
@@ -17,5 +19,13 @@ class Game
       @shots.first == 'X' ? @shots.shift(1) : @shots.shift(2)
     end
     @frames << @shots
+  end
+
+  def frame_score
+    points = @frames.map do |f|
+      frame = Frame.new(f[0], f[1], f[2])
+      frame.score
+    end
+    points.sum
   end
 end

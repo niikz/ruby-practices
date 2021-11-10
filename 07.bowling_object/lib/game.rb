@@ -32,9 +32,19 @@ class Game
   def calc_score
     points = 0
     frames = create_frame(mark)
-    frames.each do |frame|
+    frames.each_with_index do |frame, index|
       points += frame.score
+      points += first_bonus_point(frames, index)
     end
     points
+  end
+
+  def next_frame(frame, index)
+    frame[index + 1]
+  end
+
+  def first_bonus_point(frame, index)
+    next_frame = next_frame(frame, index)
+    next_frame.first_shot.score
   end
 end

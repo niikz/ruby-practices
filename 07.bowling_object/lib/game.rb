@@ -10,15 +10,16 @@ class Game
     @mark = mark
   end
 
-  def convert_to_shots
-    @shots = mark.split(',')
+  def convert_to_shots(mark)
+    mark.split(',')
   end
 
-  def divide_into_frames
-    @frames = @shots.first(9).map do
-      @shots.first == 'X' ? @shots.shift(1) : @shots.shift(2)
+  def divide_into_frames(mark)
+    shots = convert_to_shots(mark)
+    frames = shots.first(9).map do
+      shots.first == 'X' ? shots.shift(1) : shots.shift(2)
     end
-    @frames << @shots
+    frames << shots
   end
 
   def frame_score

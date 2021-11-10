@@ -22,11 +22,19 @@ class Game
     frames << shots
   end
 
-  def frame_score
-    points = @frames.map do |f|
-      frame = Frame.new(f[0], f[1], f[2])
-      frame.score
+  def create_frame(mark)
+    frames = divide_into_frames(mark)
+    frames.map do |f|
+      Frame.new(f[0], f[1], f[2])
     end
-    points.sum
+  end
+
+  def calc_score
+    points = 0
+    frames = create_frame(mark)
+    frames.each do |frame|
+      points += frame.score
+    end
+    points
   end
 end

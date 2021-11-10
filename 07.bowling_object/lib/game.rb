@@ -34,12 +34,16 @@ class Game
     frames = create_frame(mark)
     frames.each_with_index do |frame, index|
       points += frame.score
-      unless index == 9
+      unless last_frame?(index)
         points += strike_point(frames, index) if frame.strike?
         points += spare_point(frames, index) if frame.spare?
       end
     end
     points
+  end
+
+  def last_frame?(index)
+    index == 9
   end
 
   def next_frame(frame, index)

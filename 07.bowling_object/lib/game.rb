@@ -47,4 +47,14 @@ class Game
     next_frame = next_frame(frame, index)
     next_frame.first_shot.score
   end
+
+  def second_bonus_point(frame, index)
+    next_frame = next_frame(frame, index)
+    two_ahead_frame = next_frame(frame, index + 1)
+    if next_frame.strike?
+      index == 8 ? next_frame.second_shot.score : two_ahead_frame.first_shot.score
+    else
+      next_frame.second_shot.score
+    end
+  end
 end

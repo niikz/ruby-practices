@@ -29,7 +29,7 @@ class Game
     mark.split(',')
   end
 
-  def divide_into_frames(mark)
+  def shots_per_frame(mark)
     shots = convert_to_shots(mark)
     frames = shots.first(9).map do
       shots.first == 'X' ? shots.shift(1) : shots.shift(2)
@@ -38,7 +38,7 @@ class Game
   end
 
   def create_frame(mark)
-    frames = divide_into_frames(mark)
+    frames = shots_per_frame(mark)
     frames.map do |f|
       Frame.new(f[0], f[1], f[2])
     end

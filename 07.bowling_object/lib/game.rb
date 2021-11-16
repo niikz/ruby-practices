@@ -10,6 +10,21 @@ class Game
     @mark = mark
   end
 
+  def calc_score
+    points = 0
+    frames = create_frame(mark)
+    frames.each_with_index do |frame, index|
+      points += frame.score
+      unless last_frame?(index)
+        points += strike_point(frames, index) if frame.strike?
+        points += spare_point(frames, index) if frame.spare?
+      end
+    end
+    points
+  end
+
+  private
+
   def convert_to_shots(mark)
     mark.split(',')
   end
@@ -27,19 +42,6 @@ class Game
     frames.map do |f|
       Frame.new(f[0], f[1], f[2])
     end
-  end
-
-  def calc_score
-    points = 0
-    frames = create_frame(mark)
-    frames.each_with_index do |frame, index|
-      points += frame.score
-      unless last_frame?(index)
-        points += strike_point(frames, index) if frame.strike?
-        points += spare_point(frames, index) if frame.spare?
-      end
-    end
-    points
   end
 
   def last_frame?(index)

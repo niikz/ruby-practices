@@ -8,16 +8,16 @@ class Game
 
   def initialize(mark)
     @mark = mark
+    @frames = create_frame(mark)
   end
 
   def calc_score
     points = 0
-    frames = create_frame(mark)
-    frames.each_with_index do |frame, index|
+    @frames.each_with_index do |frame, index|
       points += frame.score
       unless last_frame?(index)
-        points += strike_point(frames, index) if frame.strike?
-        points += spare_point(frames, index) if frame.spare?
+        points += strike_point(@frames, index) if frame.strike?
+        points += spare_point(@frames, index) if frame.spare?
       end
     end
     points

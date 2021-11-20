@@ -12,15 +12,15 @@ class Game
   end
 
   def calc_score
-    points = 0
-    @frames.each_with_index do |frame, index|
+    @frames.each_with_index.sum do |frame, index|
+      points = 0
       points += frame.score
       unless last_frame?(index)
         points += strike_point(@frames, index) if frame.strike?
         points += spare_point(@frames, index) if frame.spare?
       end
+      points
     end
-    points
   end
 
   private

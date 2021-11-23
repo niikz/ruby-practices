@@ -12,13 +12,12 @@ class LongFormat
 
   def create
     total_blocks = 0
-    data_array = []
-    files.each do |file|
+    row_data = files.map do |file|
       @file_info = FileInfo.new(file)
       total_blocks += @file_info.total_block
-      data_array << @file_info.data
+      @file_info.data
     end
-    puts "total #{total_blocks}"
-    puts data_array
+    total = "total #{total_blocks}"
+    [total, *row_data].join("\n")
   end
 end

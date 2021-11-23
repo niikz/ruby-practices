@@ -23,16 +23,14 @@ class ShortFormat
   end
 
   def format_table(transposed_rows, max_characters)
-    transposed_rows.each do |row_files|
+    transposed_rows.map do |row_files|
       format_short_rows(row_files, max_characters)
-      print("\n")
-    end
+    end.join("\n")
   end
 
   def format_short_rows(row_files, max_characters)
-    row_files.each do |row|
-      print row.ljust(max_characters)
-      print("\t")
-    end
+    row_files.map do |row|
+      row.ljust(max_characters)
+    end.join("\t").rstrip
   end
 end

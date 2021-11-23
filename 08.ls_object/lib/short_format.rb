@@ -22,6 +22,8 @@ class ShortFormat
     format_table(transposed_rows, max_characters)
   end
 
+  private
+
   def format_table(transposed_rows, max_characters)
     transposed_rows.map do |row_files|
       format_short_rows(row_files, max_characters)

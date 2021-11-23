@@ -19,6 +19,8 @@ class CommandLineOption
     long_format ? display_long_format(files) : display_short_format(files)
   end
 
+  private
+
   def display_long_format(files)
     long_format = LongFormat.new(files)
     long_format.create

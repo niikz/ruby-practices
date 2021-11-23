@@ -29,8 +29,9 @@ class ShortFormat
   end
 
   def format_short_rows(row_files, max_characters)
-    row_files.map do |row|
-      row.ljust(max_characters)
+    row_files.map do |file|
+      file_name = file ? File.basename(file) : ''
+      file_name.ljust(max_characters)
     end.join("\t").rstrip
   end
 end

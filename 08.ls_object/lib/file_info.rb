@@ -15,7 +15,7 @@ class FileInfo
     @file_stat.blocks
   end
 
-  def data
+  def build_data
     [
       file_type + stat_mode,
       hard_links,

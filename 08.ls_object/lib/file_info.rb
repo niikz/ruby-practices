@@ -27,6 +27,8 @@ class FileInfo
     ].join(' ')
   end
 
+  private
+
   def file_type
     convert_to_ftype(@file_stat.ftype)
   end

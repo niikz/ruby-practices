@@ -3,7 +3,7 @@
 
 require 'etc'
 
-class FileInfo
+class EntryStatus
   attr_reader :file
 
   def initialize(file)

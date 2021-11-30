@@ -5,8 +5,6 @@ require_relative 'long_format'
 require_relative 'short_format'
 
 class CommandLineOption
-  attr_reader :all_entry, :long_format, :reverse
-
   def initialize(options)
     @all_entry = options['a']
     @long_format = options['l']
@@ -14,9 +12,9 @@ class CommandLineOption
   end
 
   def run_ls
-    files = all_entry ? Dir.glob('*', File::FNM_DOTMATCH).sort : Dir.glob('*').sort
-    files = files.reverse if reverse
-    long_format ? display_long_format(files) : display_short_format(files)
+    files = @all_entry ? Dir.glob('*', File::FNM_DOTMATCH).sort : Dir.glob('*').sort
+    files = files.reverse if @reverse
+    @long_format ? display_long_format(files) : display_short_format(files)
   end
 
   private

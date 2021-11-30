@@ -13,9 +13,9 @@ class LongFormat
   def create
     total_blocks = 0
     row_data = files.map do |file|
-      @file_info = FileInfo.new(file)
-      total_blocks += @file_info.total_block
-      @file_info.data
+      file_info = FileInfo.new(file)
+      total_blocks += file_info.total_block
+      file_info.data
     end
     total = "total #{total_blocks}"
     [total, *row_data].join("\n")
